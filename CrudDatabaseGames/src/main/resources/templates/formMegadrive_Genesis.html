@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>DatabaseGames</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"-->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+		integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<!--<a class="navbar-brand" href="#">DatabaseGames</a>-->
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Inicio</a></li>
+					<li class="active"><a href="/megadrive_genesis">Volver a lista de Megadrive/Genesis</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#" enctype="multipart/form-data"
+					th:action="${megadrive_genesisForm.id != 0} ? @{/megadrive_genesis/edit/submit} : @{/megadrive_genesis/new/submit}"
+					th:object="${megadrive_genesisForm}">
+					<br>
+					<br>
+					<h1	th:text="${megadrive_genesisForm.id != 0} ? 'Editar título de Megadrive/Genesis' : 'Nuevo título de Megadrive/Genesis'">Nuevo título de Megadrive/Genesis</h1>
+					
+					<div class="form-group"	th:classappend="${#fields.hasErrors('id')} ? 'has-error'">
+						<label for="id">ID</label> 
+						<input type="text" class="form-control"
+							id="id" placeholder="1" th:field="*{id}"
+							th:attrappend="readonly=${megadrive_genesisForm.id != 0} ? 'readonly' : null">
+						<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"	class="help-block" id="id-error">Errores</span>
+					</div>
+
+						<div class="form-group">
+						<label for="title">Título</label> 
+						<input type="text" class="form-control" 
+							id="title" placeholder="Title" th:field="*{title}" />
+					</div>
+
+					<div class="form-group">
+						<label for="developer">Desarrollador</label> 
+						<input type="text" class="form-control" 
+							id="developer" placeholder="Developer" th:field="*{developer}" />
+					</div>
+					
+					<div class="form-group">
+						<label for="publisher">Editor</label> 
+						<input type="text" class="form-control" 
+							id="publisher" placeholder="Publisher" th:field="*{publisher}" />
+					</div>
+
+					<div class="form-group">
+						<label for="japan_release_date">Lanzamiento en Japón</label> 
+						<input type="text" class="form-control" 
+							id="japan_release_date" placeholder="Japan release date" th:field="*{japan_release_date}" />
+					</div>
+					
+						<div class="form-group">
+						<label for="north_america_release_date">Lanzamiento en Norte América</label> 
+						<input type="text" class="form-control" 
+							id="north_america_release_date" placeholder="North America release date" th:field="*{north_america_release_date}" />
+					</div>
+
+					<div class="form-group">
+						<label for="pal_release_date">Lanzamiento en región PAL</label> 
+						<input type="text" class="form-control" 
+							id="pal_release_date" placeholder="PAL release date" th:field="*{pal_release_date}" />
+					</div>
+					
+					<div class="form-group">
+						<label for="other_release_date">Lanzamiento en otras regiones</label> 
+						<input type="text" class="form-control" 
+							id="other_release_date" placeholder="Other release date" th:field="*{other_release_date}" />
+					</div>
+
+					<div class="form-group">
+						<label for="notes">Notas</label> 
+						<input type="text" class="form-control" 
+							id="notes" placeholder="Notes" th:field="*{notes}" />
+					</div>
+								
+			
+					
+					<div class="form-group">
+						<label for="file">image <span th:text="${megadrive_genesisForm.image}"></span></label> 
+						<input id="filebutton" name="file" class="form-control input-file" type="file">
+					</div>
+					
+					<div th:if="${megadrive_genesisForm.image}">					    
+					    <img th:src="${megadrive_genesisForm.image}" width="64px">
+					</div>
+
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /.container -->
+
+</body>
+</html>

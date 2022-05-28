@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>DatabaseGames</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"-->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+		integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">DatabaseGames</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Inicio</a></li>
+					<li class="active"><a href="#">Nuevo atari_2600</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#" enctype="multipart/form-data"
+					th:action="${atari_2600Form.id != 0} ? @{/atari_2600/edit/submit} : @{/atari_2600/new/submit}"
+					th:object="${atari_2600Form}">
+					
+					<h1	th:text="${atari_2600Form.id != 0} ? 'Editar título de Atari 2600' : 'Nuevo título de Atari 2600'">Nuevo título de Atari 2600</h1>
+					
+					<div class="form-group"	th:classappend="${#fields.hasErrors('id')} ? 'has-error'">
+						<label for="id">ID</label> 
+						<input type="text" class="form-control"
+							id="id" placeholder="1" th:field="*{id}"
+							th:attrappend="readonly=${atari_2600Form.id != 0} ? 'readonly' : null">
+						<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"	class="help-block" id="id-error">Errores</span>
+					</div>
+
+						<div class="form-group">
+						<label for="title">Title</label> 
+						<input type="text" class="form-control" 
+							id="title" placeholder="Title" th:field="*{title}" />
+					</div>
+
+                    <div class="form-group">
+                        <label for="sears_title">Sears_title</label> 
+                        <input type="text" class="form-control" 
+                            id="sears_title" placeholder="Sears_title" th:field="*{sears_title}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="designer_or_programer">Diseñador</label> 
+                        <input type="text" class="form-control" 
+                            id="designer_or_programer" placeholder="Designer_or_programer" th:field="*{designer_or_programer}" />
+                    </div>
+						
+					
+						<div class="form-group">
+						<label for="year">Año</label> 
+						<input type="text" class="form-control" 
+							id="year" placeholder="Year" th:field="*{year}" />
+					</div>
+
+                    <div class="form-group">
+                        <label for="genere">Género</label> 
+                        <input type="text" class="form-control" 
+                            id="genere" placeholder="Genere" th:field="*{genere}" />
+                    </div>
+
+                    <div class="form-group">
+						<label for="publisher">Distribuidor</label> 
+						<input type="text" class="form-control" 
+							id="publisher" placeholder="Publisher" th:field="*{publisher}" />
+					</div>
+
+                    <div class="form-group">
+                        <label for="notes">Notas</label> 
+                        <input type="text" class="form-control" 
+                            id="notes" placeholder="Notes" th:field="*{notes}" />
+                    </div>
+					
+
+					<div class="form-group">
+                        <label for="code">Código</label> 
+                        <input type="text" class="form-control" 
+                            id="code" placeholder="Code" th:field="*{code}" />
+                    </div>
+					
+					
+					<div class="form-group">
+						<label for="file">Imagen <span th:text="${atari_2600Form.image}"></span></label> 
+						<input id="filebutton" name="file" class="form-control input-file" type="file">
+					</div>
+					
+					<div th:if="${atari_2600Form.image}">					    
+					    <img th:src="${atari_2600Form.image}" width="64px">
+					</div>
+
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /.container -->
+
+</body>
+</html>

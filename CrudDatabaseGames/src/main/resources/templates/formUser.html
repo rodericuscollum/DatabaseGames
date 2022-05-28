@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>DatabaseGames</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"-->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+		integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<!--<a class="navbar-brand" href="#">DatabaseGames</a>-->
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Inicio</a></li>
+					<li class="active"><a href="/user">Volver a lista de usuarios</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#" enctype="multipart/form-data"
+					th:action="${userForm.id != 0} ? @{/user/edit/submit} : @{/user/new/submit}"
+					th:object="${userForm}">
+					<br>
+					<br>
+					<h1	th:text="${userForm.id != 0} ? 'Editar usuario' : 'Nuevo usuario'">Nuevo usuario</h1>
+					
+					<div class="form-group"	th:classappend="${#fields.hasErrors('id')} ? 'has-error'">
+						<label for="id">ID</label> 
+						<input type="text" class="form-control"
+							id="id" placeholder="1" th:field="*{id}"
+							th:attrappend="readonly=${userForm.id != 0} ? 'readonly' : null">
+						<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"	class="help-block" id="id-error">Errores</span>
+					</div>
+
+                    <div class="form-group">
+                        <label for="firstName">Nombre</label> 
+                        <input type="text" class="form-control" 
+                            id="firstName" placeholder="FirsName" th:field="*{firstName}" />
+                    </div>
+					
+                    <div class="form-group">
+                        <label for="lastName">LastName</label> 
+                        <input type="text" class="form-control" 
+                            id="lastName" placeholder="LastName" th:field="*{lastName}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label> 
+                        <input type="email" class="form-control" 
+                            id="email" placeholder="Email" th:field="*{email}" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label> 
+                        <input type="text" class="form-control" 
+                            id="password" placeholder="Password" th:field="*{password}" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="roles">Roles</label> 
+                        <input type="text" class="form-control" 
+                            id="roles" placeholder="Roles" th:field="*{roles}" />
+                    </div>
+                   
+
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /.container -->
+
+</body>
+</html>

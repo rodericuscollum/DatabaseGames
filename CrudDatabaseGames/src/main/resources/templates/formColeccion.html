@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>DatabaseGames</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"-->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+		integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+
+
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+					aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<!--	<a class="navbar-brand" href="#">DatabaseGames</a> -->
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Inicio</a></li>
+					<li class="active"><a href="/coleccion">Volver a lista de Coleccion</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#" enctype="multipart/form-data"
+					th:action="${coleccionForm.id != 0} ? @{/coleccion/edit/submit} : @{/coleccion/new/submit}"
+					th:object="${coleccionForm}">
+					<br>
+					<br>
+					<h1 th:text="${coleccionForm.id != 0} ? 'Editar título de Colección' : 'Nuevo título de Colección'">
+						Nuevo título de Coleccion</h1>
+
+					<div class="form-group" th:classappend="${#fields.hasErrors('id')} ? 'has-error'">
+						<label for="id">ID</label>
+						<input type="text" class="form-control" id="id" placeholder="1" th:field="*{id}"
+							th:attrappend="readonly=${coleccionForm.id != 0} ? 'readonly' : null">
+						<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="help-block"
+							id="id-error"></span>
+					</div>
+
+
+					<div class="form-group">
+						<label for="user" class="col-sm-6 control-label">Título de la colección</label>
+						<input type="text" class="form-control" id="title" placeholder="Title" th:field="*{title}" />
+					</div>
+
+
+
+
+					<div class="form-group">
+						<label for="user" class="col-sm-2 control-label">Amiga</label>
+						<select class="form-control" id="amiga" name="amiga">
+							<option value="">Amiga</option>
+							<option th:each="miAmiga : ${juegosAmiga}" th:value="${miAmiga.id}"
+								th:text="${miAmiga.title}" th:selected="${miAmiga.id==Amiga}"></option>
+						</select>
+					</div>
+
+
+
+					<div class="form-group">
+						<label for="user" class="col-sm-2 control-label">Amstrad CPC</label>
+						<select class="form-control" id="amstrad_cpc" name="amstrad_cpc">
+							<option value="">Amstrad_cpc</option>
+							<option th:each="miAmstrad_cpc : ${juegosAmstrad_cpc}" th:value="${miAmstrad_cpc.id}"
+								th:text="${miAmstrad_cpc.title}" th:selected="${miAmstrad_cpc.id==Amstrad_cpc}">
+							</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">Atari 2600</label>
+						<select class="form-control" id="atari_2600" name="atari_2600">
+							<option value="">Atari_2600</option>
+							<option th:each="miAtari_2600 : ${juegosAtari_2600}" th:value="${miAtari_2600.id}"
+								th:text="${miAtari_2600.title}" th:selected="${miAtari_2600.id==Atari_2600}"></option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">Famicom</label>
+						<select class="form-control" id="famicom" name="famicom">
+							<option value="">Famicom</option>
+							<option th:each="miFamicom : ${juegosFamicom}" th:value="${miFamicom.id}"
+								th:text="${miFamicom.title}" th:selected="${miFamicom.id==Famicom}"></option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">Master System</label>
+						<select class="form-control" id="master_system" name="master_system">
+							<option value="">Master_System</option>
+							<option th:each="miMaster_System : ${juegosMaster_System}" th:value="${miMaster_System.id}"
+								th:text="${miMaster_System.title}" th:selected="${miMaster_System.id==Master_System}">
+							</option>
+						</select>
+					</div>
+
+
+					<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">Megadrive/Genesis</label>
+						<select class="form-control" id="megadrive_genesis" name="megadrive_genesis">
+							<option value="">Megadrive_Genesis</option>
+							<option th:each="miMegadrive_Genesis : ${juegosMegadrive_Genesis}"
+								th:value="${miMegadrive_Genesis.id}" th:text="${miMegadrive_Genesis.title}"
+								th:selected="${miMegadrive_Genesis.id==Megadrive_Genesis}"></option>
+						</select>
+					</div>
+
+
+					<div class="form-group  col-10">
+						<label for="user" class="col-sm-4 control-label">Neo Geo Pocket</label>
+						<select class="form-control" id="neo_geo_pocket" name="neo_geo_pocket">
+							<option value="">Neo_Geo_Pocket</option>
+							<option th:each="miNeo_Geo_Pocket : ${juegosNeo_Geo_Pocket}"
+								th:value="${miNeo_Geo_Pocket.id}" th:text="${miNeo_Geo_Pocket.title}"
+								th:selected="${miNeo_Geo_Pocket.id==Neo_Geo_Pocket}"></option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">Neo Geo</label>
+						<select class="form-control" id="neo_geo" name="neo_geo">
+							<option value="">Neo_Geo</option>
+							<option th:each="miNeo_Geo : ${juegosNeo_Geo}" th:value="${miNeo_Geo.id}"
+								th:text="${miNeo_Geo.title}" th:selected="${miNeo_Geo.id==Neo_Geo}"></option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">Nes</label>
+						<select class="form-control" id="nes" name="nes">
+							<option value="">Nes</option>
+							<option th:each="miNes : ${juegosNes}" th:value="${miNes.id}" th:text="${miNes.title}"
+								th:selected="${miNes.id==Nes}"></option>
+						</select>
+					</div>
+
+					<!--<div class="form-group">
+						<label for="user" class="col-sm-4 control-label">User</label>
+						<select class="form-control" id="user" name="user">
+							<option value="">User</option>
+							<option th:each="miUser : ${juegosUser}" th:value="${miUser.id}" th:text="${miUser.title}"
+								th:selected="${miUser.id==User}"></option>
+						</select>
+					</div> -->
+
+
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /.container -->
+
+</body>
+
+</html>

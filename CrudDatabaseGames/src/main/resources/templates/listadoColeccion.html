@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="index.html :: scripts"></div>
+
+<head>
+    <title>DatabaseGames</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../static/css/styles.css"
+          th:href="@{/css/styles.css}">
+          
+          	<!-- create navigation bar ( header) -->
+          	
+	<nav th:replace="index.html :: nav"></nav>
+
+	<br>
+	<br>
+
+	<div class="container">
+		<br>
+		Bienvenido <span sec:authentication="principal.username"> User </span>
+		<br>		 
+
+	</div>
+
+</head>
+
+<body>
+
+
+<main layout:fragment="contenido">
+    <div class="col-12">
+    <br>
+        <h2>Títulos de Coleccion</h2>
+        <br>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+        <a class="btn btn-success mb-2" th:href="@{/coleccion/new}">Añadir título de Coleccion</a>
+        <div class="table-responsive">
+        <br>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                	<th>ID</th>
+                    <th>Título</th>
+                    <th>Amiga</th>
+                    <th>Amstrad CPC</th>
+                    <th>Atari 2600</th>
+                    <th>Famicom</th>
+                    <th>Master System</th>
+                    <th>Megadrive/Genesis</th>
+                    <th>Neo Geo Pocket</th>
+                    <th>Neo Geo</th>
+                    <th>Nes</th>
+                    <!--<th>User</th> -->
+                    
+                    
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="coleccion : ${listaColeccion}">
+               		<td th:text="${coleccion.id}"></td>
+			        <td th:text="${coleccion.title}"></td>
+                    <td th:text="${coleccion.amiga}"></td>
+                    <td th:text="${coleccion.amstrad_cpc}"></td>
+                    <td th:text="${coleccion.atari_2600}"></td>
+                    <td th:text="${coleccion.famicom}"></td>
+                    <td th:text="${coleccion.master_system}"></td>
+                    <td th:text="${coleccion.megadrive_genesis}"></td>
+                    <td th:text="${coleccion.neo_geo_pocket}"></td>
+                    <td th:text="${coleccion.neo_geo}"></td>
+                    <td th:text="${coleccion.nes}"></td>
+                  <!--  <td th:text="${coleccion.user.email}"></td> -->
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/coleccion/edit/} + ${coleccion.id}">Editar <i
+                                class="fa fa-edit"></i></a>
+                 
+                    <a class="btn btn-primary" th:href="@{/coleccion/delete/__${coleccion.id}__}" role="button">Borrar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+       
+       <form th:action="@{/auth/logout}" method="POST" id="logoutForm"></form>           
+       
+</main>
+
+</body>
+</html>

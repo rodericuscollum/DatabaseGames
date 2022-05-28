@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>DatabaseGames</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"-->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+		integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+
+	<style>
+		#content {
+
+			width: 100%;
+			margin: auto;
+			position: relative;
+		}
+
+		#bg {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: url('https://upload.wikimedia.org/wikipedia/commons/0/02/NES_Super_Mario.png') center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+			opacity: .1;
+			height: 100vh;
+			width: 100%;
+		}
+	</style>
+
+</head>
+
+
+<body>
+
+	<div id="content">
+		<div id='bg'></div>
+
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+					<!--<a class="navbar-brand" href="#">DatabaseGames</a>-->
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/">Inicio</a></li>
+						<li class="active"><a href="/compra_venta">Volver a lista de Compra-Venta</a></li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</nav>
+
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<form method="post" action="#" enctype="multipart/form-data"
+						th:action="${compra_ventaForm.id != 0} ? @{/compra_venta/edit/submit} : @{/compra_venta/new/submit}"
+						th:object="${compra_ventaForm}">
+						<br>
+						<br>
+						<h1 th:text="${compra_ventaForm.id != 0} ? 'Nuevo Artículo' : 'Nuevo Artículo'">Nuevo Artículo
+						</h1>
+
+						<div class="row">
+							<div class="col-md-2">
+								<div class="form-group" th:classappend="${#fields.hasErrors('id')} ? 'has-error'">
+									<div><label for="id">ID</label></div>
+									<input type="text" class="form-control" id="id" placeholder="1" th:field="*{id}"
+										th:attrappend="readonly=${compra_ventaForm.id != 0} ? 'readonly' : null">
+									<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="help-block"
+										id="id-error">Errores</span>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<div><label for="compannia">Compañía/Marca</label></div>
+									<select class="form-control" id="select1" name="compannia" onchange='cargarSelect2(this.value);'> <!-- id para el script -->
+										<option value=''>Selecciona una opcion</option>
+										<option value='Nintendo'>Nintendo</option>
+										<option value='Sega'>Sega</option>
+										<option value='Xbox'>Xbox</option>
+										<option value='Otro'>Otro</option>
+									</select>
+									<class="form-control" id="select1" name="compannia" th:field="${compannia}" />
+								</div>
+							</div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<div><label for="sistema">Sistema</label></div>
+									<select class="form-control" id="select2" name="sistema" onchange='seleccinado_select2();'
+										disabled>
+										<option value='0'>Selecciona una opcion</option>
+									</select>
+									
+									<class="form-control" id="select2" name="sistema" th:field="*{sistema}" />
+								</div>
+							</div>
+
+								<div class="col-md-3">
+								<div class="form-group">
+									<div><label for="articulo">Artículo</label></div>
+									<select class="form-control" id="articulo" name="articulo" th:field="*{articulo}" required/>
+										<option value=''>Selecciona una opcion</option>
+										<option value='Nuevo'>Nuevo</option>
+										<option value='Impecable'>Impecable</option>
+										<option value='Bueno'>Bueno</option>
+										<option value='Regular'>Regular</option>
+										<option value='Malo'>Malo</option>
+									</select>
+									
+										
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="titulo">Título</label>
+									<input type="text" class="form-control" id="titulo" placeholder="Title"
+										th:field="*{titulo}" required/>
+
+								</div>
+							</div>
+
+							<div class="col-md-7">
+								<div class="form-group">
+									<label for="descripcion">Descripción</label>
+									<textarea class="form-control" id="descripcion" placeholder="Description"
+										th:field="*{descripcion}" required></textarea>
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="row">
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<div><label for="estado">Estado</label></div>
+									<select class="form-control" id="estado" name="estado" th:field="*{estado}" required/>
+										<option value=''>Selecciona una opcion</option>
+										<option value='Nuevo'>Nuevo</option>
+										<option value='Impecable'>Impecable</option>
+										<option value='Bueno'>Bueno</option>
+										<option value='Regular'>Regular</option>
+										<option value='Malo'>Malo</option>
+									</select>
+									
+										
+								</div>
+							</div>
+
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="file">Imagen <span th:text="${compra_ventaForm.image}"></span></label>
+									<input id="filebutton" name="file" class="form-control input-file" type="file">
+
+								</div>
+								<div th:if="${compra_ventaForm.image}">
+									<img th:src="${compra_ventaForm.image}" width="64px">
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-1">
+									<div><label for="precio">Precio</label></div>
+									<input type="text" class="form-control" id="precio" placeholder="€"
+										th:field="*{precio}" required/>
+								</div>
+
+							</div>
+						</div>
+
+						<button type="submit" class="btn btn-primary">Enviar</button>
+					</form>
+				</div>
+
+			</div>
+
+
+
+			<!-- /.container -->
+		</div>
+	</div>
+</body>
+
+
+<script type="text/javascript">
+	function cargarSelect2(valor) {
+		var arrayValores = new Array(
+			new Array("Nintendo", "Famicom", "Famicom"),
+			new Array("Nintendo", "SFamicom", "SFamicom"),
+			new Array("Nintendo", "Nes", "Nes"),
+			new Array("Nintendo", "SNes", "SNes"),
+			new Array("Nintendo", "N64", "N64"),
+			new Array("Nintendo", "Gamecube", "Gamecube"),
+			new Array("Nintendo", "Wii", "Wii"),
+			new Array("Nintendo", "Wii-U", "Wii-U"),
+			new Array("Nintendo", "Switch", "Switch"),
+			new Array("Nintendo", "Game Boy", "Game Boy"),
+			new Array("Nintendo", "Game boy Color", "Game boy Color"),
+			new Array("Nintendo", "Game boy Advance", "Game boy Advance"),
+			new Array("Nintendo", "DS", "DS"),
+			new Array("Nintendo", "3DS", "3DS"),
+
+			new Array("Sega", "SG1000", "SG1000"),
+			new Array("Sega", "Master System", "Master System"),
+			new Array("Sega", "Megadrive", "Megadrive"),
+			new Array("Sega", "Saturn", "Saturn"),
+			new Array("Sega", "Dreamcast", "Dreamcast"),
+
+			new Array("Xbox", "Xbox", "Xbox"),
+			new Array("Xbox", "360", "360"),
+			new Array("Xbox", "One S/X", "One S/X"),
+			new Array("Xbox", "Series S/X", "Series S/X"));
+		if (valor == 0) {
+			// desactivamos el segundo select 
+			document.getElementById("select2").disabled = true;
+		} else {
+			// eliminamos todos los posibles valores que contenga el select2 
+			document.getElementById("select2").options.length = 0;
+			// a�adimos los nuevos valores al select2 
+			document.getElementById("select2").options[0] = new Option("Selecciona una opcion", "0");
+			for (i = 0; i < arrayValores.length; i++) {
+				// unicamente a�adimos las opciones que pertenecen al id seleccionado
+				// del primer select 
+				if (arrayValores[i][0] == valor) {
+					document.getElementById("select2").options[document.getElementById("select2").options.length] = new Option(arrayValores[i][2], arrayValores[i][1]);
+				}
+			}
+			// habilitamos el segundo select 
+			document.getElementById("select2").disabled = false;
+		}
+	}
+	/** * Una vez selecciona una valor del segundo selecte, obtenemos la informaci�n * de los dos selects y la mostramos */
+	function seleccinado_select2(value) {
+		var v1 = document.getElementById("select1");
+		var valor1 = v1.options[v1.selectedIndex].value;
+		var text1 = v1.options[v1.selectedIndex].text;
+		var v2 = document.getElementById("select2");
+		var valor2 = v2.options[v2.selectedIndex].value;
+		var text2 = v2.options[v2.selectedIndex].text;
+
+		//alert("Se ha seleccionado el valor "+valor1+" ("+text1+") del primer select y el valor "+valor2+" ("+text2+") del segundo select");
+	}
+</script>
+
+</html>
